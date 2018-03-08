@@ -1,6 +1,6 @@
-import {AbstractControl} from "@angular/forms";
-import {FormPartType} from "./form.part.type";
-import {Type} from "@digitalascetic/ngx-reflection";
+import {AbstractControl} from '@angular/forms';
+import {FormPartType} from './form.part.type';
+import {Type} from '@digitalascetic/ngx-reflection';
 
 export abstract class AbstractFormPart {
 
