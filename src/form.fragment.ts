@@ -1,6 +1,6 @@
-import {AbstractFormPart} from "./abstract.form.part";
-import {AbstractControl, FormGroup} from "@angular/forms";
-import {FormPartType} from "./form.part.type";
+import {AbstractFormPart} from './abstract.form.part';
+import {AbstractControl, FormGroup} from '@angular/forms';
+import {FormPartType} from './form.part.type';
 
 /**
  * Class describing a form that can be dynamically rendered.
