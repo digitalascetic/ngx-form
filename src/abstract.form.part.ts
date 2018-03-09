@@ -2,16 +2,24 @@ import {AbstractControl} from '@angular/forms';
 import {FormPartType} from './form.part.type';
 import {Type} from '@digitalascetic/ngx-reflection';
 
+export function returnFormPartType() {
+    return FormPartType;
+}
+
+export function returnAbstractFormPart() {
+    return AbstractFormPart;
+}
+
 export abstract class AbstractFormPart {
 
     protected _key: string;
 
     protected _label: string;
 
-    @Type(() => FormPartType)
+    @Type(returnFormPartType)
     protected _type: FormPartType;
 
-    @Type(() => AbstractFormPart)
+    @Type(returnAbstractFormPart)
     protected _parent: AbstractFormPart;
 
     protected _description: string;
