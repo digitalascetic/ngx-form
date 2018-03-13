@@ -41,6 +41,32 @@ describe('FormService tests', () => {
 
     });
 
+    it('should handle correctly null date properties', () => {
+
+
+        let testObj = new TestClass('testObject', null, null);
+
+        let ctrl = formService.getControl(testObj);
+
+        expect(ctrl instanceof FormGroup).toBeTruthy();
+        expect((<FormGroup>ctrl).controls).toBeDefined();
+        expect((<FormGroup>ctrl).controls['name']).toBeDefined();
+        expect((<FormGroup>ctrl).controls['startDate']).toBeDefined();
+        expect((<FormGroup>ctrl).controls['startDate'] instanceof FormControl).toBeTruthy();
+        expect((<FormGroup>ctrl).controls['description']).toBeDefined();
+        expect((<FormGroup>ctrl).controls['description'] instanceof FormGroup).toBeTruthy();
+
+        expect(ctrl.value).toBeDefined();
+        expect(ctrl.value.startDate).toBeDefined();
+        expect(ctrl.value.name).toBe('testObject');
+        expect(ctrl.value.startDate).toBeDefined();
+        expect(ctrl.value.startDate).toBe(null);
+        expect(ctrl.value.description).toBeDefined();
+        expect(ctrl.value.description.text).toBeDefined();
+        expect(ctrl.value.description.text).toBe(null);
+
+    });
+
     it('should give form for composed object', () => {
 
         let testDesc = new TestDescription('bla bla');

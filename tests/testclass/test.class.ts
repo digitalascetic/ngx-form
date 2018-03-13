@@ -6,12 +6,13 @@ export class TestClass {
 
     private _name: string;
 
-    @Type(TestDescription)
+    @Type(() => TestDescription)
     private _description: TestDescription;
 
+    @Type(() => Date)
     private _startDate: Date;
 
-    constructor(name: string, description: TestDescription, startDate: Date) {
+    constructor(name: string, description: TestDescription, startDate?: Date) {
         this._name = name;
         this._description = description;
         this._startDate = startDate;

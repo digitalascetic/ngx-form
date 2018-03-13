@@ -46,7 +46,11 @@ export class FormService {
 
         options = Object.assign({}, this._options.control, options);
 
+
         if (typeof obj === 'function') {
+            if (obj === Date) {
+                return this.getControl(propertiesObj);
+            }
             return this.getControl(Reflect.construct(obj, []), propertiesObj);
         }
 
