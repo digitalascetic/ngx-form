@@ -22,7 +22,7 @@
     "annotateForClosureCompiler": true,
     "strictMetadataEmit": true,
     "skipTemplateCodeGen": true,
-    "flatModuleId": "ngx-form",
+    "flatModuleId": "@digitalascetic/ngx-form",
     "flatModuleOutFile": "ngx-form.js"
   }
 }

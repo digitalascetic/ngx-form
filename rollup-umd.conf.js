@@ -4,7 +4,7 @@ export default {
         file: 'dist/bundles/ngx-form.umd.js',
         format: 'umd'
     },
-    name: 'ngx-form',
+    name: 'ng.ngx-form',
     external: ['@angular/core', '@angular/forms', '@digitalascetic/ngx-reflection', 'reflect-metadata'],
     globals: {
         '@angular/core': 'ng.core',
