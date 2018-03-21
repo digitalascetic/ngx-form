@@ -47,7 +47,7 @@ export class FormService {
         options = Object.assign({}, this._options.control, options);
 
 
-        if (typeof obj === 'function') {
+        if (typeof obj === "function") {
             if (obj === Date) {
                 return this.getControl(propertiesObj);
             }
@@ -75,23 +75,23 @@ export class FormService {
 
                     let transProp = this._propMapper ? this._propMapper.getTransformedName(prop) : prop;
 
-                    let excludeFunc = Reflect.getMetadata('ControlExclude', obj, prop);
+                    let excludeFunc = Reflect.getMetadata("ControlExclude", obj, prop);
 
                     if (excludeFunc && excludeFunc(obj, prop)) {
                         return;
                     }
 
-                    let replacePropObj = Reflect.getMetadata('ControlReplace', obj, prop);
+                    let replacePropObj = Reflect.getMetadata("ControlReplace", obj, prop);
 
                     if (replacePropObj) {
 
-                        if (replacePropObj['excludeIfNull']
+                        if (replacePropObj["excludeIfNull"]
                             && (!propertiesObj || !propertiesObj[transProp])
                             && (!obj[prop])) {
                             return;
                         }
 
-                        let replaceProp = replacePropObj['prop'];
+                        let replaceProp = replacePropObj["prop"];
                         let replaceObject = {};
 
                         if (propertiesObj && propertiesObj[transProp]) {
@@ -112,7 +112,7 @@ export class FormService {
 
                     let typeProp = this._reflectionService.getObjectPropertyType(obj, prop);
 
-                    if (!obj[prop] && typeof typeProp === 'function' && this.isNotPrimitive(typeProp)) {
+                    if (!obj[prop] && typeof typeProp === "function" && this.isNotPrimitive(typeProp)) {
                         ctrlObj[transProp] = this.getControl(typeProp, propertiesObj ? propertiesObj[transProp] : null, options);
                     } else {
                         ctrlObj[transProp] = this.getControl(obj[prop], propertiesObj ? propertiesObj[transProp] : null, options);
@@ -209,16 +209,17 @@ export class FormService {
      * returns an object of type "clazz" patched with the content of value.
      *
      * @param value, e.g. myControl.value
-     * @param clazz, e.g. MyClass
+     * @param clazz, e.g. MyClas
+     * @param arrayParams, e.g. constructor parameters
      * @returns an instance of MyClass patched w
      */
-    public getObject(value: Object, clazz ?: Function) {
+    public getObject(value: Object, clazz ?: Function, arrayParams: any[] = []) {
 
         if (!clazz || !(value instanceof Object)) {
             return value;
         }
 
-        let returnValue = Reflect.construct(clazz, []);
+        let returnValue = Reflect.construct(clazz, arrayParams);
 
         if (Array.isArray(value)) {
             let arr = [];
@@ -236,21 +237,21 @@ export class FormService {
 
                 let typeProp = this._reflectionService.getObjectPropertyType(returnValue, prop);
 
-                let replacePropObj = Reflect.getMetadata('ControlReplace', returnValue, prop);
+                let replacePropObj = Reflect.getMetadata("ControlReplace", returnValue, prop);
 
                 if (replacePropObj) {
 
-                    let replaceProp = replacePropObj['prop'];
+                    let replaceProp = replacePropObj["prop"];
 
                     if (value[transProp]) {
 
                         if (this.isNullOrUndefined(value[transProp][replaceProp]) &&
-                            replacePropObj['excludeIfNull']) {
+                            replacePropObj["excludeIfNull"]) {
                             return;
                         }
 
                         let replaceValue = value[transProp][replaceProp];
-                        let replaceObject = {}
+                        let replaceObject = {};
                         replaceObject[replaceProp] = replaceValue;
                         returnValue[prop] = this.getObject(replaceObject, typeProp);
                         return;
@@ -258,7 +259,10 @@ export class FormService {
 
                 }
 
-                returnValue[prop] = this.getObject(value[transProp], typeProp);
+                if (value[transProp]) {
+                    returnValue[prop] = this.getObject(value[transProp], typeProp);
+                }
+
                 return;
 
             }
@@ -281,12 +285,12 @@ export class FormService {
 
         if (control.dirty || options.forceInclude) {
 
-            if (control.value === null || typeof control.value === 'undefined') {
+            if (control.value === null || typeof control.value === "undefined") {
                 return control.value;
             }
 
             if (control instanceof FormControl) {
-                return control.value
+                return control.value;
             }
 
             if (control instanceof FormArray) {
@@ -415,7 +419,7 @@ export class FormService {
             (value, index) => {
                 value[prop] = index;
             }
-        )
+        );
 
     }
 
@@ -458,7 +462,7 @@ export class FormService {
     }
 
     private isNullOrUndefined(value) {
-        return (value === null || typeof value === "undefined")
+        return (value === null || typeof value === "undefined");
     }
 
 }

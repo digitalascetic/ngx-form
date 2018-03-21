@@ -286,6 +286,19 @@ describe('FormService tests', () => {
 
     });
 
+    it('should manage constructor parameters', () => {
+        let plainTest = {name: 'testClass1', description: 'description text', 'startDate': new Date()};
+        let testClass: TestClass = formService.getObject(plainTest, TestClass, ['testClass1', 'description text', new Date()]);
+
+        expect(testClass).toBeDefined();
+        expect(testClass instanceof TestClass).toBeTruthy();
+        expect(testClass.name).toBe('testClass1');
+        expect(testClass.description).toBe('description text');
+        expect(testClass.status).not.toBe(TestClass.STATUS_NOT_STARTED);
+        expect(testClass.status).toBe(TestClass.STATUS_STARTED);
+
+    });
+
     it('should return simple single modified value', () => {
 
         let ctrl = new FormControl("test");
