@@ -259,7 +259,7 @@ export class FormService {
 
                 }
 
-                if (value[transProp] != null && value[transProp] !== 'undefined') {
+                if (value[transProp] != null && value[transProp] !== "undefined") {
                     returnValue[prop] = this.getObject(value[transProp], typeProp);
                 }
 
@@ -430,22 +430,25 @@ export class FormService {
         }
 
         if (control instanceof FormGroup) {
-            let fgControl: FormGroup = control as FormGroup;
-            Object.keys(value).forEach(name => {
-                let transName = this._propMapper ? this._propMapper.getTransformedName(name) : name;
-                if (fgControl.controls[transName]) {
-                    this.patchValue(fgControl.controls[transName], value[name], {onlySelf: true, emitEvent});
-                }
-            });
+            const fgControl: FormGroup = control as FormGroup;
+            if (value instanceof Object) {
+                Object.keys(value).forEach(name => {
+                    const transName = this._propMapper ? this._propMapper.getTransformedName(name) : name;
+                    if (fgControl.controls[transName]) {
+                        this.patchValue(fgControl.controls[transName], value[name], {onlySelf: true, emitEvent});
+                    }
+                });
+            }
         }
 
         if (control instanceof FormArray) {
             if (value instanceof Array) {
-                let arrControl: FormArray = control as FormArray;
+                const arrControl: FormArray = control as FormArray;
                 arrControl.controls.forEach(
                     (arrCtrl, index) => {
-                        if (value.length < index)
+                        if (value.length < index) {
                             this.patchValue(arrCtrl, value[index], {onlySelf: true, emitEvent});
+                        }
                     }
                 );
             } else {
