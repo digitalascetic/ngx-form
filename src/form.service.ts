@@ -259,7 +259,7 @@ export class FormService {
 
                 }
 
-                if (value[transProp]) {
+                if (value[transProp] != null && value[transProp] !== 'undefined') {
                     returnValue[prop] = this.getObject(value[transProp], typeProp);
                 }
 
