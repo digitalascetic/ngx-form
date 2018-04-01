@@ -1,13 +1,20 @@
-import {TestClass} from "./test.class";
 import {TestDescription} from "./test.description";
+import {Type} from "@digitalascetic/ngx-reflection";
+import {AbstractTestClass} from "./abstract.test.class";
+import {TestClass} from "./test.class";
 
 
-export class ChildTestClass extends TestClass {
+export class ChildTestClass extends AbstractTestClass {
 
+    @Type()
     private _childType: number;
 
-    constructor(name: string, description: TestDescription, startDate: Date, childType: number) {
-        super(name, description, startDate);
+    constructor(name: string, description: string, startDate: Date, childType: number) {
+        const testDescription = new TestDescription(description);
+        const testClass = new TestClass(name, null);
+        testClass.description = testDescription;
+        testClass.startDate = startDate;
+        super(testClass);
         this._childType = childType;
     }
 

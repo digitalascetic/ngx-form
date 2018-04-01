@@ -36,6 +36,14 @@ export class TestClass {
         return this._description;
     }
 
+    set description(value: TestDescription) {
+        this._description = value;
+    }
+
+    set startDate(value: Date) {
+        this._startDate = value;
+    }
+
     get startDate(): Date {
         return this._startDate;
     }

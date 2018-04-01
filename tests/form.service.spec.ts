@@ -9,6 +9,7 @@ import {FormServiceConfiguration} from "../src/form.service.configuration";
 import {TestClass} from "./testclass/test.class";
 import {TestDescription} from "./testclass/test.description";
 import {TestDecoratorClass} from "./testclass/test.decorator.class";
+import {ChildTestClass} from "./testclass/child.test.class";
 
 describe("FormService tests", () => {
 
@@ -297,14 +298,16 @@ describe("FormService tests", () => {
 
     it("should manage constructor parameters", () => {
         let plainTest = {name: "testClass1", description: "description text", "startDate": new Date()};
-        let testClass: TestClass = formService.getObject(plainTest, TestClass, ["testClass1", "description text", new Date()]);
-
+        let testClass: ChildTestClass = formService.getObject(plainTest, ChildTestClass, ["testClass1", "description text", new Date()]);
+        
         expect(testClass).toBeDefined();
-        expect(testClass instanceof TestClass).toBeTruthy();
-        expect(testClass.name).toBe("testClass1");
-        expect(testClass.description).toBe("description text");
-        expect(testClass.status).not.toBe(TestClass.STATUS_NOT_STARTED);
-        expect(testClass.status).toBe(TestClass.STATUS_STARTED);
+        expect(testClass instanceof ChildTestClass).toBeTruthy();
+        expect(testClass.testClass instanceof TestClass).toBeTruthy();
+        expect(testClass.testClass.name).toBe("testClass1");
+        expect(testClass.testClass.description instanceof TestDescription).toBeTruthy();
+        expect(testClass.testClass.description.text).toBe("description text");
+        expect(testClass.testClass.status).toBe(TestClass.STATUS_NOT_STARTED);
+        expect(testClass.testClass.status).not.toBe(TestClass.STATUS_STARTED);
 
     });
 
