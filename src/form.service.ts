@@ -85,14 +85,20 @@ export class FormService {
 
                     if (replacePropObj) {
 
+                        let replaceProp = replacePropObj["prop"];
+                        let replaceObject = {};
+
+                        if (replacePropObj["asFormControlIfNull"]
+                            && (!obj[prop] || !obj[prop][this._propMapper.getOriginalName(replaceProp)])) {
+                            ctrlObj[transProp] = new FormControl();
+                            return;
+                        }
+
                         if (replacePropObj["excludeIfNull"]
                             && (!propertiesObj || !propertiesObj[transProp])
                             && (!obj[prop])) {
                             return;
                         }
-
-                        let replaceProp = replacePropObj["prop"];
-                        let replaceObject = {};
 
                         if (propertiesObj && propertiesObj[transProp]) {
                             replaceObject[replaceProp] = propertiesObj[transProp][replaceProp];

@@ -130,7 +130,8 @@ describe("FormService tests", () => {
     it("should follow decorator directives", () => {
 
         let testDesc = new TestDescription("bla bla", 999);
-        let testDecoration = new TestDecoratorClass(testDesc, "not showed", 23);
+        let testDesc2 = new TestDescription("bla bla 2", 1000);
+        let testDecoration = new TestDecoratorClass(testDesc, "not showed", 23, testDesc2);
 
         let ctrl = formService.getControl(testDecoration);
 
@@ -144,6 +145,9 @@ describe("FormService tests", () => {
         expect((<FormGroup>(<FormGroup>ctrl).controls["description"]).controls).toBeDefined();
         expect((<FormGroup>(<FormGroup>ctrl).controls["description"]).controls["id"] instanceof FormControl).toBeTruthy();
         expect((<FormGroup>(<FormGroup>ctrl).controls["description"]).controls["text"]).not.toBeDefined();
+        expect((<FormGroup>ctrl).controls["description2"]).toBeDefined();
+        expect((<FormGroup>ctrl).controls["description2"] instanceof FormGroup).toBeTruthy();
+        expect((<FormGroup>(<FormGroup>ctrl).controls["description2"]).controls["id"] instanceof FormControl).toBeTruthy();
 
         expect(ctrl.value).toBeDefined();
         expect(ctrl.value.inForm).toBeDefined();
@@ -506,6 +510,21 @@ describe("FormService tests", () => {
         expect(ctrl.controls["age"]).toBeDefined();
         expect(ctrl.controls["age"] instanceof FormControl).toBeTruthy();
         expect(ctrl.controls["age"].value).toEqual(27);
+
+    });
+
+    it("should correctly create control following decorator @ControlReplace asFormControlIfNull if hasn't property value", () => {
+
+        let ctrl = formService.getControl(TestDecoratorClass);
+
+        expect(ctrl instanceof FormGroup).toBeTruthy();
+        expect((<FormGroup>ctrl).controls).toBeDefined();
+        expect((<FormGroup>ctrl).controls["inForm"]).toBeDefined();
+        expect((<FormGroup>ctrl).controls["inForm"] instanceof FormControl).toBeTruthy();
+        expect((<FormGroup>ctrl).controls["notInForm"]).not.toBeDefined();
+        expect((<FormGroup>ctrl).controls["description"]).not.toBeDefined();
+        expect((<FormGroup>ctrl).controls["description2"]).toBeDefined();
+        expect((<FormGroup>ctrl).controls["description2"] instanceof FormControl).toBeTruthy();
 
     });
 
