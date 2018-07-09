@@ -10,7 +10,7 @@ export class TestDecoratorClass {
     private _description: TestDescription;
 
     @Type(TestDescription)
-    @ControlReplace("id", {excludeIfNull: false, asFormControlIfNull: true})
+    @ControlReplace("id", {asFormControlIfNull: true})
     private _description2: TestDescription;
 
     @ControlExclude()

@@ -16,8 +16,8 @@ export function ControlExclude(func?: Function) {
 }
 
 export interface ControlReplaceOptions {
-    excludeIfNull: boolean;
-    asFormControlIfNull: boolean;
+    excludeIfNull?: boolean;
+    asFormControlIfNull?: boolean;
 }
 
 export function ControlReplace(prop: string, options?: ControlReplaceOptions) {
