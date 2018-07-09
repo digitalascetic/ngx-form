@@ -94,6 +94,12 @@ export class FormService {
                         let replaceProp = replacePropObj["prop"];
                         let replaceObject = {};
 
+                        if (replacePropObj['asFormControlIfNull']
+                            && (!obj[prop] || !obj[prop][this._propMapper.getOriginalName(replaceProp)])) {
+                            ctrlObj[transProp] = new FormControl();
+                            return;
+                        }
+
                         if (propertiesObj && propertiesObj[transProp]) {
                             replaceObject[replaceProp] = propertiesObj[transProp][replaceProp];
                         } else {

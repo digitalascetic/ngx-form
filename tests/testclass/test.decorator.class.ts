@@ -9,15 +9,20 @@ export class TestDecoratorClass {
     @Type(TestDescription)
     private _description: TestDescription;
 
+    @Type(TestDescription)
+    @ControlReplace("id", {excludeIfNull: false, asFormControlIfNull: true})
+    private _description2: TestDescription;
+
     @ControlExclude()
     private _notInForm: string;
 
     private _inForm: number;
 
-    constructor(description: TestDescription, notInForm: string, inForm: number) {
+    constructor(description: TestDescription, notInForm: string, inForm: number, description2?: TestDescription) {
         this._description = description;
         this._notInForm = notInForm;
         this._inForm = inForm;
+        this._description2 = description2;
     }
 
     get description(): TestDescription {
@@ -30,5 +35,9 @@ export class TestDecoratorClass {
 
     get inForm(): number {
         return this._inForm;
+    }
+
+    get description2(): TestDescription {
+        return this._description2;
     }
 }
