@@ -2,8 +2,10 @@ import {Type} from "@digitalascetic/ngx-reflection";
 
 export class TestDescription {
 
+    @Type()
     private _id: number;
 
+    @Type()
     private _text: string;
 
     @Type()

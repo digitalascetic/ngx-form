@@ -303,7 +303,7 @@ describe("FormService tests", () => {
     it("should manage constructor parameters", () => {
         let plainTest = {name: "testClass1", description: "description text", "startDate": new Date()};
         let testClass: ChildTestClass = formService.getObject(plainTest, ChildTestClass, ["testClass1", "description text", new Date()]);
-        
+
         expect(testClass).toBeDefined();
         expect(testClass instanceof ChildTestClass).toBeTruthy();
         expect(testClass.testClass instanceof TestClass).toBeTruthy();
@@ -526,6 +526,33 @@ describe("FormService tests", () => {
         expect((<FormGroup>ctrl).controls["description2"]).toBeDefined();
         expect((<FormGroup>ctrl).controls["description2"] instanceof FormControl).toBeTruthy();
 
+    });
+
+    it("creates composed custom objects from control and preserve type on replaced object", () => {
+
+        let testDesc = new TestDescription("bla bla", 999);
+        let testDesc2 = new TestDescription("bla bla 2");
+        let testDecoration = new TestDecoratorClass(testDesc, "not showed", 23, testDesc2);
+
+        let ctrl = formService.getControl(testDecoration);
+        
+        let test: TestDecoratorClass = formService.getObject(ctrl.value, TestDecoratorClass);
+
+        expect(test).toBeDefined();
+        expect(test instanceof TestDecoratorClass).toBeTruthy();
+        expect(test.description3).not.toBeDefined();
+        expect(test.inForm).toBeDefined();
+        expect(test.inForm).toBe(23);
+        expect(test.notInForm).not.toBeDefined();
+        expect(test.description instanceof TestDescription).toBeTruthy();
+        expect(test.description).toBeDefined();
+        expect(test.description.text).not.toBeDefined();
+        expect(test.description.id).toBeDefined();
+        expect(test.description.id).toBe(999);
+        expect(test.description2).toBeDefined();
+        expect(test.description2.id).not.toBeDefined();
+        expect(test.description2.text).toBeDefined();
+        expect(test.description2.text).toBe("bla bla 2");
     });
 
 });
