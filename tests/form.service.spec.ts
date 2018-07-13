@@ -535,12 +535,9 @@ describe("FormService tests", () => {
         let testDecoration = new TestDecoratorClass(testDesc, "not showed", 23, testDesc2);
 
         let ctrl = formService.getControl(testDecoration);
-
-        console.log(ctrl);
-
+        
         let test: TestDecoratorClass = formService.getObject(ctrl.value, TestDecoratorClass);
 
-        console.log(test);
         expect(test).toBeDefined();
         expect(test instanceof TestDecoratorClass).toBeTruthy();
         expect(test.description3).not.toBeDefined();
@@ -552,9 +549,10 @@ describe("FormService tests", () => {
         expect(test.description.text).not.toBeDefined();
         expect(test.description.id).toBeDefined();
         expect(test.description.id).toBe(999);
-        //expect(test.description2).toBeDefined();
-        //expect(test.description2.id).not.toBeDefined();
-        //expect(test.description2.text).toBeDefined();
+        expect(test.description2).toBeDefined();
+        expect(test.description2.id).not.toBeDefined();
+        expect(test.description2.text).toBeDefined();
+        expect(test.description2.text).toBe("bla bla 2");
     });
 
 });

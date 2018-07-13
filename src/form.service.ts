@@ -91,6 +91,11 @@ export class FormService {
                         if (replacePropObj["asFormControlIfNull"]
                             && (!obj[prop] || !obj[prop][this._propMapper.getOriginalName(replaceProp)])) {
                             ctrlObj[transProp] = new FormControl();
+
+                            if (!this.isObjectEmpty(obj[prop])) {
+                                ctrlObj[transProp].setValue(obj[prop]);
+                            }
+
                             return;
                         }
 
@@ -251,6 +256,13 @@ export class FormService {
 
                     if (value[transProp]) {
 
+                        if (replacePropObj["asFormControlIfNull"] &&
+                            !this.isObjectEmpty(value[transProp])) {
+                            returnValue[prop] = this.getObject(value[transProp], typeProp);
+                            return;
+                        }
+
+
                         if (this.isNullOrUndefined(value[transProp][replaceProp]) &&
                             replacePropObj["excludeIfNull"]) {
                             return;
@@ -267,7 +279,7 @@ export class FormService {
 
                 if (value[transProp] != null &&
                     value[transProp] !== "undefined" &&
-                    !this.objectIsEmpty(value[transProp])) {
+                    !this.isObjectEmpty(value[transProp])) {
                     returnValue[prop] = this.getObject(value[transProp], typeProp);
                 }
 
@@ -476,7 +488,7 @@ export class FormService {
         return (value === null || typeof value === "undefined");
     }
 
-    private objectIsEmpty(obj): boolean {
+    private isObjectEmpty(obj): boolean {
         return obj instanceof Object &&
             Object.keys(obj).every(x => (obj[x] === null || obj[x] === "" || obj[x] === "undefined"));
     }
