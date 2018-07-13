@@ -525,6 +525,8 @@ describe("FormService tests", () => {
         expect((<FormGroup>ctrl).controls["description"]).not.toBeDefined();
         expect((<FormGroup>ctrl).controls["description2"]).toBeDefined();
         expect((<FormGroup>ctrl).controls["description2"] instanceof FormControl).toBeTruthy();
+        expect((<FormGroup>ctrl).controls["child"]).toBeDefined();
+        expect((<FormGroup>ctrl).controls["child"] instanceof FormControl).toBeTruthy();
 
     });
 
@@ -532,10 +534,12 @@ describe("FormService tests", () => {
 
         let testDesc = new TestDescription("bla bla", 999);
         let testDesc2 = new TestDescription("bla bla 2");
+        let child = new ChildTestClass("testClass1", "description text", new Date(), 23);
         let testDecoration = new TestDecoratorClass(testDesc, "not showed", 23, testDesc2);
+        testDecoration.child = child;
 
         let ctrl = formService.getControl(testDecoration);
-        
+
         let test: TestDecoratorClass = formService.getObject(ctrl.value, TestDecoratorClass);
 
         expect(test).toBeDefined();
@@ -553,6 +557,9 @@ describe("FormService tests", () => {
         expect(test.description2.id).not.toBeDefined();
         expect(test.description2.text).toBeDefined();
         expect(test.description2.text).toBe("bla bla 2");
+        expect(test.child).toBeDefined();
+        expect(test.child.childType).toBeDefined();
+        expect(test.child.childType).toBe(23);
     });
 
 });

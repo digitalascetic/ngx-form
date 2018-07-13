@@ -1,8 +1,8 @@
 import {Type} from "@digitalascetic/ngx-reflection";
-import {ControlExclude, ControlReplace} from "../../src";
+import {ControlExclude, ControlReplace, ControlWrapper} from "../../src";
 import {TestDescription} from "./test.description";
 import {TestEmptyObject} from "./test.empty.object";
-
+import {ChildTestClass} from "./child.test.class";
 
 export class TestDecoratorClass {
 
@@ -16,6 +16,10 @@ export class TestDecoratorClass {
 
     @Type(() => TestDescription)
     private _description3: TestDescription;
+
+    @Type()
+    @ControlWrapper()
+    private _child: ChildTestClass;
 
     @ControlExclude()
     private _notInForm: string;
@@ -59,5 +63,13 @@ export class TestDecoratorClass {
 
     set emptyObject(value: TestEmptyObject) {
         this._emptyObject = value;
+    }
+
+    get child(): ChildTestClass {
+        return this._child;
+    }
+
+    set child(value: ChildTestClass) {
+        this._child = value;
     }
 }
