@@ -265,7 +265,9 @@ export class FormService {
 
                 }
 
-                if (value[transProp] != null && value[transProp] !== "undefined") {
+                if (value[transProp] != null &&
+                    value[transProp] !== "undefined" &&
+                    !this.objectIsEmpty(value[transProp])) {
                     returnValue[prop] = this.getObject(value[transProp], typeProp);
                 }
 
@@ -472,6 +474,11 @@ export class FormService {
 
     private isNullOrUndefined(value) {
         return (value === null || typeof value === "undefined");
+    }
+
+    private objectIsEmpty(obj): boolean {
+        return obj instanceof Object &&
+            Object.keys(obj).every(x => (obj[x] === null || obj[x] === "" || obj[x] === "undefined"));
     }
 
 }
