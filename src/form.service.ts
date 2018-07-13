@@ -123,6 +123,14 @@ export class FormService {
 
                     let typeProp = this._reflectionService.getObjectPropertyType(obj, prop);
 
+
+                    let wrapperFunc = Reflect.getMetadata("ControlWrapper", obj, prop);
+
+                    if (wrapperFunc) {
+                        ctrlObj[transProp] = new FormControl(obj[prop]);
+                        return;
+                    }
+
                     if (!obj[prop] && typeof typeProp === "function" && this.isNotPrimitive(typeProp)) {
                         ctrlObj[transProp] = this.getControl(typeProp, propertiesObj ? propertiesObj[transProp] : null, options);
                     } else {
