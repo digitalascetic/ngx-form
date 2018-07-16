@@ -416,6 +416,11 @@ describe("FormService tests", () => {
         formArray.at(1).get("description").get("text").setValue("newDesk");
         formArray.at(1).get("description").get("text").markAsDirty();
 
+        const newStartDateValue = new Date("2018-06-12");
+
+        formArray.at(1).get("startDate").patchValue(newStartDateValue);
+        formArray.at(1).get("startDate").markAsDirty();
+
         expect((<FormGroup>(<FormGroup>formArray.controls[1]).controls["description"]).controls["text"].value).toBeDefined();
         expect((<FormGroup>(<FormGroup>formArray.controls[1]).controls["description"]).controls["text"].value).toBe("newDesk");
         expect(testClassArray[1].description.text).toBeDefined();
@@ -424,6 +429,8 @@ describe("FormService tests", () => {
         formService.updateFromControl(testClassArray, formArray);
 
         expect(testClassArray[1].description.text).toBeDefined();
+        expect(testClassArray[1].startDate).toBeDefined();
+        expect(testClassArray[1].startDate).toEqual(newStartDateValue);
         expect(testClassArray[0].description.text).toBe("desc1");
         expect(testClassArray[1].description.text).toBe("newDesk");
         expect(testClassArray[2].description.text).toBe("desc3");
