@@ -215,17 +215,43 @@ export class FormService {
 
     public updateFromControl(object: any, control: AbstractControl, updateJustModifiedValues: boolean = true) {
 
-        let value: any;
-        if (updateJustModifiedValues) {
-            value = control.value;
+        /*
+                let value: any;
+                if (updateJustModifiedValues) {
+                    value = control.value;
 
-            //   value = this.getModifiedValues(control);
-        } else {
-            value = control.value;
+                    //   value = this.getModifiedValues(control);
+                } else {
+                    value = control.value;
+
+                }
+                        this.updateFromValue(object, value);
+         */
+
+        if (control instanceof FormArray) {
+            control.controls.forEach((ctrl, index) => {
+                this.updateFromControl(object[index], ctrl);
+                return;
+            });
         }
 
-        this.updateFromValue(object, value);
 
+        if (control instanceof FormGroup) {
+            Object.keys(control.controls).forEach(key => {
+                const ctrl = control.controls[key];
+                const transProp = this._propMapper ? this._propMapper.getOriginalName(key) : key;
+                if (updateJustModifiedValues) {
+                    if (ctrl.dirty) {
+                        object[transProp] = ctrl.value;
+                    }
+                } else {
+                    object[transProp] = ctrl.value;
+                }
+                return;
+            });
+        }
+
+        object = control.value;
     }
 
     /**
