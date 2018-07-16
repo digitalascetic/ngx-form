@@ -1,6 +1,6 @@
 {
   "name": "@digitalascetic/ngx-form",
-  "version": "1.0.15",
+  "version": "1.0.16",
   "license": "MIT",
   "main": "./bundles/ngx-form.umd.js",
   "module": "./esm5/ngx-form.js",
