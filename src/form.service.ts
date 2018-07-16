@@ -178,8 +178,13 @@ export class FormService {
             if (value instanceof Object) {
                 Object.getOwnPropertyNames(value).forEach(
                     prop => {
-
                         let transProp = this._propMapper ? this._propMapper.getOriginalName(prop) : prop;
+
+                        if (value[prop] instanceof Date) {
+                            object[transProp] = value[prop];
+                            return;
+                        }
+
                         if (object[transProp] instanceof Object) {
                             if (value[prop] instanceof Object) {
                                 this.updateFromValue(object[transProp], value[prop]);
