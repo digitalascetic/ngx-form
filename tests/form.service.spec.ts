@@ -248,6 +248,8 @@ describe("FormService tests", () => {
 
         expect(test).toBeDefined();
         expect(test instanceof TestClass).toBeTruthy();
+        expect(test.startDate).toBeDefined();
+        expect(test.startDate instanceof Date).toBeTruthy();
         expect(test.description).toBeDefined();
         expect(test.description instanceof TestDescription).toBeTruthy();
         expect(test.description).toBeDefined();

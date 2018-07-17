@@ -322,6 +322,11 @@ export class FormService {
                     returnValue[prop] = this.getObject(value[transProp], typeProp);
                 }
 
+                if (value[transProp] instanceof Date) {
+                    returnValue[prop] = value[transProp];
+                    return;
+                }
+
                 return;
 
             }
