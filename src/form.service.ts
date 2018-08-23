@@ -240,17 +240,18 @@ export class FormService {
             Object.keys(control.controls).forEach(key => {
                 const ctrl = control.controls[key];
                 const transProp = this._propMapper ? this._propMapper.getOriginalName(key) : key;
-
-                if (ctrl instanceof FormGroup ||
-                    ctrl instanceof FormArray) {
-                    this.updateFromControl(object[transProp], ctrl);
-                } else {
-                    if (updateJustModifiedValues) {
-                        if (ctrl.dirty) {
+                if (!this.isNullOrUndefined(object[transProp])) {
+                    if (ctrl instanceof FormGroup ||
+                        ctrl instanceof FormArray) {
+                        this.updateFromControl(object[transProp], ctrl);
+                    } else {
+                        if (updateJustModifiedValues) {
+                            if (ctrl.dirty) {
+                                object[transProp] = ctrl.value;
+                            }
+                        } else {
                             object[transProp] = ctrl.value;
                         }
-                    } else {
-                        object[transProp] = ctrl.value;
                     }
                 }
                 return;
