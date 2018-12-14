@@ -24,12 +24,12 @@ export class TestDecoratorClass {
     @ControlExclude()
     private _notInForm: string;
 
-    private _inForm: number;
+    private _inForm: any;
 
     @Type(() => TestEmptyObject)
     private _emptyObject: TestEmptyObject;
 
-    constructor(description: TestDescription, notInForm: string, inForm: number, description2?: TestDescription, description3?: TestDescription) {
+    constructor(description: TestDescription, notInForm: string, inForm: any, description2?: TestDescription, description3?: TestDescription) {
         this._description = description;
         this._notInForm = notInForm;
         this._inForm = inForm;
@@ -45,7 +45,7 @@ export class TestDecoratorClass {
         return this._notInForm;
     }
 
-    get inForm(): number {
+    get inForm(): any {
         return this._inForm;
     }
 
