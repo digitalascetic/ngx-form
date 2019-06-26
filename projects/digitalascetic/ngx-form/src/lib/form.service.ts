@@ -1,9 +1,9 @@
-import {AbstractControl, FormArray, FormGroup, FormControl} from '@angular/forms';
-import {Injectable} from '@angular/core';
-import 'reflect-metadata';
-import {PropertyNameMapper} from '@digitalascetic/ngx-object-transformer';
-import {ReflectionService} from '@digitalascetic/ngx-reflection';
-import {FormServiceConfiguration} from './form.service.configuration';
+import {AbstractControl, FormArray, FormGroup, FormControl} from "@angular/forms";
+import {Injectable} from "@angular/core";
+import "reflect-metadata";
+import {PropertyNameMapper} from "@digitalascetic/ngx-object-transformer";
+import {ReflectionService} from "@digitalascetic/ngx-reflection";
+import {FormServiceConfiguration} from "./form.service.configuration";
 
 @Injectable()
 export class FormService {
@@ -245,6 +245,8 @@ export class FormService {
                     ctrl instanceof FormArray) {
                     if (!this.isNullOrUndefined(object[transProp])) {
                         this.updateFromControl(object[transProp], ctrl);
+                    } else if (!this.isNullOrUndefined(ctrl.value)) {
+                        object[transProp] = ctrl.value;
                     }
                 } else {
                     if (updateJustModifiedValues) {
