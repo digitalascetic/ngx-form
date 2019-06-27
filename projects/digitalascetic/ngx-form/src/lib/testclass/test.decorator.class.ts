@@ -15,6 +15,7 @@ export class TestDecoratorClass {
     private _description2: TestDescription;
 
     @Type(() => TestDescription)
+    @ControlReplace("id", {excludeIfNull: false})
     private _description3: TestDescription;
 
     @Type()

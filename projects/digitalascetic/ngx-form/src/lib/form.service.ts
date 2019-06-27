@@ -245,6 +245,9 @@ export class FormService {
                     ctrl instanceof FormArray) {
                     if (!this.isNullOrUndefined(object[transProp])) {
                         this.updateFromControl(object[transProp], ctrl);
+                    } else {
+                        const clazz = this._reflectionService.getObjectPropertyType(object, transProp);
+                        object[transProp] = this.getObject(ctrl.value, clazz);
                     }
                 } else {
                     if (updateJustModifiedValues) {
