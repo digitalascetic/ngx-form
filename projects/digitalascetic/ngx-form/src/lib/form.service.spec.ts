@@ -553,7 +553,7 @@ describe("FormService tests", () => {
 
         expect(test).toBeDefined();
         expect(test instanceof TestDecoratorClass).toBeTruthy();
-        expect(test.description3).toBeDefined();
+        expect(test.description3).not.toBeDefined();
         expect(test.inForm).toBeDefined();
         expect(test.inForm).toBe(23);
         expect(test.notInForm).not.toBeDefined();
@@ -569,78 +569,6 @@ describe("FormService tests", () => {
         expect(test.child).toBeDefined();
         expect(test.child.childType).toBeDefined();
         expect(test.child.childType).toBe(23);
-    });
-
-    it("should update values of an array from a FormArray control", () => {
-
-        let testClassArray = new Array<TestClass>();
-        let testDesc1 = new TestDescription("desc1");
-        let testDesc2 = new TestDescription("desc2");
-        let testDesc3 = new TestDescription("desc3");
-        let testClass1 = new TestClass("testClass1", testDesc1, new Date());
-        let testClass2 = new TestClass("testClass2", testDesc2, new Date());
-        let testClass3 = new TestClass("testClass3", testDesc3, new Date());
-        testClassArray.push(testClass1, testClass2, testClass3);
-
-        let configuration = new FormServiceConfiguration(new PropertyAccessorMapper());
-        let formService = new FormService(configuration);
-
-        let formArray: FormArray = <FormArray>formService.getControl(testClassArray);
-
-        expect((<FormGroup>(<FormGroup>formArray.controls[1]).controls["description"]).controls["text"].value).toBe("desc2");
-        expect(testClassArray[1].description.text).toBeDefined();
-        expect(testClassArray[1].description.text).toBe("desc2");
-
-        formArray.at(1).get("description").get("text").setValue("newDesk");
-        formArray.at(1).get("description").get("text").markAsDirty();
-
-        const newStartDateValue = new Date("2018-06-12");
-
-        formArray.at(1).get("startDate").patchValue(newStartDateValue);
-        formArray.at(1).get("startDate").markAsDirty();
-
-        expect((<FormGroup>(<FormGroup>formArray.controls[1]).controls["description"]).controls["text"].value).toBeDefined();
-        expect((<FormGroup>(<FormGroup>formArray.controls[1]).controls["description"]).controls["text"].value).toBe("newDesk");
-        expect(testClassArray[1].description.text).toBeDefined();
-        expect(testClassArray[1].description.text).toBe("desc2");
-
-        formService.updateFromControl(testClassArray, formArray);
-
-        expect(testClassArray[1].description.text).toBeDefined();
-        expect(testClassArray[1].startDate).toBeDefined();
-        expect(testClassArray[1].startDate).toEqual(newStartDateValue);
-        expect(testClassArray[0].description.text).toBe("desc1");
-        expect(testClassArray[1].description.text).toBe("newDesk");
-        expect(testClassArray[2].description.text).toBe("desc3");
-
-
-    });
-
-    it("should update properties as undefined of an object from a FormGroup control", () => {
-
-
-        let testDesc1 = new TestDescription("desc1");
-        let testDesc2 = new TestDescription("desc2", 2);
-        let testDesc3 = new TestDescription("desc3", 3);
-
-        let testClass = new TestDecoratorClass(testDesc1, "not", false, testDesc2);
-
-        let configuration = new FormServiceConfiguration(new PropertyAccessorMapper());
-        let formService = new FormService(configuration);
-
-        let fromGroup: FormGroup = <FormGroup>formService.getControl(testClass);
-
-        expect(fromGroup.get("description2.id").value).toBe(2);
-        expect(fromGroup.get("description3")).toBeDefined();
-
-        fromGroup.get("description3.id").setValue(testDesc3.id);
-        fromGroup.get("description3").markAsDirty();
-
-        formService.updateFromControl(testClass, fromGroup);
-
-        expect(testClass.description3).toBeDefined();
-        expect(testClass.description3.id).toBe(3);
-
     });
 });
 
