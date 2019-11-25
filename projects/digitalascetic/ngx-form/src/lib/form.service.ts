@@ -396,7 +396,7 @@ export class FormService {
                             let frmGrpOptions: any = {};
                             Object.assign(frmGrpOptions, options);
                             frmGrpOptions.forceInclude = options.forceInclude ||
-                                (options.alwaysIncludeProps && options.alwaysIncludeProps.indexOf(prop) >= 0 ? true : false);
+                                (options.alwaysIncludeProps && options.alwaysIncludeProps.indexOf(prop) >= 0);
                             returnObj[prop] = this.getModifiedValues(frmGrp.controls[prop], frmGrpOptions);
                         }
                     }
