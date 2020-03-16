@@ -56,7 +56,7 @@ export class FormFragment extends AbstractFormPart {
 
     private visitFragmentParts(parts: IterableIterator<AbstractFormPart>, frmGrp: FormGroup) {
 
-        let item: { value: AbstractFormPart, done: boolean };
+        let item: IteratorResult<AbstractFormPart>;
         let formPart: AbstractFormPart;
 
         while (true) {

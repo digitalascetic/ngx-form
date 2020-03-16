@@ -1,5 +1,5 @@
 import {FormControl, FormGroup, FormArray} from "@angular/forms";
-import * as moment from "moment";
+import * as moment from "moment-mini";
 import {PropertyAccessorMapper, PropertyNameMapper} from "@digitalascetic/ngx-object-transformer";
 import {FormService} from "./form.service";
 import {FormField} from "./form.field";
