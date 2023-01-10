@@ -1,4 +1,4 @@
-import {FormControl, FormGroup, FormArray, UntypedFormGroup, UntypedFormControl} from '@angular/forms';
+import {FormControl, FormGroup, FormArray, UntypedFormGroup, UntypedFormControl, FormBuilder} from '@angular/forms';
 import * as moment from 'moment-mini';
 import {PropertyAccessorMapper, PropertyNameMapper} from '@digitalascetic/ngx-object-transformer';
 import {FormService} from './form.service';
@@ -590,21 +590,23 @@ describe('FormService tests', () => {
   });
 
   it('should correctly patch UntypedFormGroup from value', () => {
-
-    const group = new UntypedFormGroup({
-      'prop1': new UntypedFormControl(),
-      'prop2': new UntypedFormControl(),
-      'prop3': new FormControl()
+    const builder = new FormBuilder();
+    const testGroup = builder.group({
+      'text': [],
+      'active': [],
+      'props': []
     });
 
-    formService.patchValue(group, {prop1: 'test', prop3: 'test'});
+    const test = new TestDescription('test');
+    test.props = ['3'];
 
-    expect(group.get('prop1')).toBeDefined();
-    expect(group.get('prop2')).toBeDefined();
-    expect(group.get('prop3')).toBeDefined();
-    expect(group.get('prop1').value).toEqual('test');
-    expect(group.get('prop3').value).toEqual('test');
-    expect(group.get('prop2').value).toBeNull();
+    formService.patchValue(testGroup, test);
+    console.log(testGroup);
+    console.log(test);
+
+    expect(testGroup.get('text').value).toEqual('test');
+    expect(testGroup.get('props').value).toEqual(['3']);
+    expect(testGroup.get('active').value).toBeNull();
   });
 });
 
