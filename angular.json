@@ -12,7 +12,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
-            "tsConfig": "projects/digitalascetic/ngx-form/tsconfig.lib.json"
+            "project": "projects/digitalascetic/ngx-form/ng-package.json"
           },
           "configurations": {
             "production": {
