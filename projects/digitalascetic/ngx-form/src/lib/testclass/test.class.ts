@@ -18,7 +18,7 @@ export class TestClass {
     @Type(() => Date)
     private _startDate: Date;
 
-    constructor(name: string, description: TestDescription, startDate?: Date) {
+    constructor(name: string, description?: TestDescription, startDate?: Date) {
         this._name = name;
         this._description = description;
         this._startDate = startDate;

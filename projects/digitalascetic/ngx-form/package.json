@@ -1,6 +1,6 @@
 {
   "name": "@digitalascetic/ngx-form",
-  "version": "17.0.2",
+  "version": "17.1.0",
   "peerDependencies": {
     "@angular/common": ">=17.1.0",
     "@angular/core": ">=17.1.0",

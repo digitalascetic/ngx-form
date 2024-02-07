@@ -401,10 +401,12 @@ describe('FormService tests', () => {
     let testDesc1 = new TestDescription('desc1');
     let testDesc2 = new TestDescription('desc2');
     let testDesc3 = new TestDescription('desc3');
+    let testDesc4 = new TestDescription('desc4');
     let testClass1 = new TestClass('testClass1', testDesc1, new Date());
     let testClass2 = new TestClass('testClass2', testDesc2, new Date());
     let testClass3 = new TestClass('testClass3', testDesc3, new Date());
-    testClassArray.push(testClass1, testClass2, testClass3);
+    let testClass4 = new TestClass('testClass4', null, new Date());
+    testClassArray.push(testClass1, testClass2, testClass3, testClass4);
 
     let configuration = new FormServiceConfiguration(new PropertyAccessorMapper());
     let formService = new FormService(configuration);
@@ -428,6 +430,11 @@ describe('FormService tests', () => {
     expect(testClassArray[1].description.text).toBeDefined();
     expect(testClassArray[1].description.text).toBe('desc2');
 
+
+    formService.patchValue(formArray.at(3).get('description'), testDesc4);
+    expect((<FormGroup>(<FormGroup>formArray.controls[3]).controls['description']).controls['text'].value).toBeDefined();
+    expect((<FormGroup>(<FormGroup>formArray.controls[3]).controls['description']).controls['text'].value).toBe('desc4');
+
     formService.updateFromControl(testClassArray, formArray);
 
     expect(testClassArray[1].description.text).toBeDefined();
@@ -436,8 +443,7 @@ describe('FormService tests', () => {
     expect(testClassArray[0].description.text).toBe('desc1');
     expect(testClassArray[1].description.text).toBe('newDesk');
     expect(testClassArray[2].description.text).toBe('desc3');
-
-
+    expect(testClassArray[3].description.text).toBe('desc4');
   });
 
   it('should correctly create control from FormFragment', () => {
@@ -601,8 +607,6 @@ describe('FormService tests', () => {
     test.props = ['3'];
 
     formService.patchValue(testGroup, test);
-    console.log(testGroup);
-    console.log(test);
 
     expect(testGroup.get('text').value).toEqual('test');
     expect(testGroup.get('props').value).toEqual(['3']);
