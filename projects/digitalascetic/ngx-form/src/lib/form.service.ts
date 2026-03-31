@@ -339,7 +339,12 @@ export class FormService {
         let wrapperPropObj = Reflect.getMetadata('ControlWrapper', returnValue, prop);
 
         if (wrapperPropObj) {
-          returnValue[prop] = value[transProp];
+          if (value[transProp] !== null &&
+            value[transProp] !== 'undefined' &&
+            !this.isObjectEmpty(value[transProp])) {
+            returnValue[prop] = value[transProp];
+          }
+
           return;
         }
 
