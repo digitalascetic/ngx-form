@@ -46,3 +46,4 @@ ngx-form.iml
 package-lock.json
 browserslist
 .angular
+.claude

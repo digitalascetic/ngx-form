@@ -1,9 +1,10 @@
 {
   "name": "@digitalascetic/ngx-form",
-  "version": "17.1.3",
+  "version": "20.0.0",
   "peerDependencies": {
-    "@angular/common": ">=17.1.0",
-    "@angular/core": ">=17.1.0",
+    "@angular/common": ">=20.0.0",
+    "@angular/core": ">=20.0.0",
+    "@angular/forms": ">=20.0.0",
     "@digitalascetic/ngx-object-transformer": ">=17.0.0",
     "@digitalascetic/ngx-reflection": ">=14.0.0"
   },

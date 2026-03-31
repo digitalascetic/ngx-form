@@ -33,18 +33,6 @@
             ]
           }
         },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "projects/digitalascetic/ngx-form/tsconfig.lib.json",
-              "projects/digitalascetic/ngx-form/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
-          }
-        }
       }
     }
   }
