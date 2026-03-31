@@ -573,6 +573,7 @@ describe('FormService tests', () => {
     expect(test.description2.text).toBeDefined();
     expect(test.description2.text).toBe('bla bla 2');
     expect(test.child).toBeDefined();
+    expect(test.child instanceof ChildTestClass).toBeTruthy();
     expect(test.child.childType).toBeDefined();
     expect(test.child.childType).toBe(23);
   });
