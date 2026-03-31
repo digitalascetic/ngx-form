@@ -1,4 +1,12 @@
-import {AbstractControl, FormArray, FormGroup, FormControl, UntypedFormControl, UntypedFormGroup, UntypedFormArray} from '@angular/forms';
+import {
+  AbstractControl,
+  FormArray,
+  FormGroup,
+  FormControl,
+  UntypedFormControl,
+  UntypedFormGroup,
+  UntypedFormArray
+} from '@angular/forms';
 import {Injectable} from '@angular/core';
 import 'reflect-metadata';
 import {PropertyNameMapper} from '@digitalascetic/ngx-object-transformer';
@@ -328,6 +336,13 @@ export class FormService {
 
         }
 
+        let wrapperPropObj = Reflect.getMetadata('ControlWrapper', returnValue, prop);
+
+        if (wrapperPropObj) {
+          returnValue[prop] = value[transProp];
+          return;
+        }
+
         if (value[transProp] != null &&
           value[transProp] !== 'undefined' &&
           !this.isObjectEmpty(value[transProp])) {
@@ -355,7 +370,11 @@ export class FormService {
    * @return
    */
   public getModifiedValues(control: AbstractControl,
-                           options?: { forceInclude?: boolean, includeEntireArray?: boolean, alwaysIncludeProps?: Array<string> }) {
+                           options?: {
+                             forceInclude?: boolean,
+                             includeEntireArray?: boolean,
+                             alwaysIncludeProps?: Array<string>
+                           }) {
 
     options = Object.assign({}, this._options.modifiedValues, options);
 
