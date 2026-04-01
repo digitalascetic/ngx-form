@@ -578,8 +578,13 @@ export class FormService {
   }
 
   private isObjectEmpty(obj): boolean {
+    if (Array.isArray(obj)) {
+      return obj.length === 0 || obj.every(x => x === null || x === '' || x === 'undefined' || this.isObjectEmpty(x));
+    }
     return obj instanceof Object &&
-      Object.keys(obj).every(x => (obj[x] === null || obj[x] === '' || obj[x] === 'undefined'));
+      Object.keys(obj).every(x =>
+        obj[x] === null || obj[x] === '' || obj[x] === 'undefined' || this.isObjectEmpty(obj[x])
+      );
   }
 
 }

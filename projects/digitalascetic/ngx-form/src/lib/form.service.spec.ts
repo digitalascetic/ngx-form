@@ -10,6 +10,8 @@ import {TestClass} from './testclass/test.class';
 import {TestDescription} from './testclass/test.description';
 import {TestDecoratorClass} from './testclass/test.decorator.class';
 import {ChildTestClass} from './testclass/child.test.class';
+import {TestEmptyOuter} from './testclass/test.empty.outer';
+import {TestEmptyInner} from './testclass/test.empty.inner';
 
 describe('FormService tests', () => {
 
@@ -594,6 +596,23 @@ describe('FormService tests', () => {
     expect(group.get('prop1').value).toEqual('test');
     expect(group.get('prop3').value).toEqual('test');
     expect(group.get('prop2').value).toBeNull();
+  });
+
+  it('should return undefined for a sub-property that is an initialized empty object', () => {
+
+    const outer = new TestEmptyOuter();
+    outer.nested = new TestEmptyInner();
+
+    const ctrl = formService.getControl(outer) as FormGroup;
+
+    expect(ctrl instanceof FormGroup).toBeTruthy();
+    expect(ctrl.controls['nested'] instanceof FormGroup).toBeTruthy();
+    expect(ctrl.value.nested.prop1).toBeNull();
+    expect(ctrl.value.nested.prop2).toBeNull();
+
+    const result: TestEmptyOuter = formService.getObject(ctrl.value, TestEmptyOuter);
+
+    expect(result.nested).toBeUndefined();
   });
 
   it('should correctly patch UntypedFormGroup from value', () => {
