@@ -338,7 +338,7 @@ export class FormService {
 
         let wrapperPropObj = Reflect.getMetadata('ControlWrapper', returnValue, prop);
 
-        if (wrapperPropObj && typeProp === clazz) {
+        if (wrapperPropObj && typeProp && value[transProp] instanceof typeProp) {
           if (value[transProp] !== null &&
             value[transProp] !== 'undefined' &&
             !this.isObjectEmpty(value[transProp])) {
